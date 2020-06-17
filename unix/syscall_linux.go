@@ -1762,6 +1762,7 @@ func Dup2(oldfd, newfd int) error {
 //sys	Fchdir(fd int) (err error)
 //sys	Fchmod(fd int, mode uint32) (err error)
 //sys	Fchownat(dirfd int, path string, uid int, gid int, flags int) (err error)
+//sys	fcntl(fd int, cmd int, arg int) (val int, err error)
 //sys	Fdatasync(fd int) (err error)
 //sys	Fgetxattr(fd int, attr string, dest []byte) (sz int, err error)
 //sys	FinitModule(fd int, params string, flags int) (err error)
@@ -2139,8 +2140,8 @@ func Faccessat(dirfd int, path string, mode uint32, flags int) (err error) {
 	return EACCES
 }
 
-//sys nameToHandleAt(dirFD int, pathname string, fh *fileHandle, mountID *_C_int, flags int) (err error) = SYS_NAME_TO_HANDLE_AT
-//sys openByHandleAt(mountFD int, fh *fileHandle, flags int) (fd int, err error) = SYS_OPEN_BY_HANDLE_AT
+//nosys nameToHandleAt(dirFD int, pathname string, fh *fileHandle, mountID *_C_int, flags int) (err error) = SYS_NAME_TO_HANDLE_AT
+//nosys openByHandleAt(mountFD int, fh *fileHandle, flags int) (fd int, err error) = SYS_OPEN_BY_HANDLE_AT
 
 // fileHandle is the argument to nameToHandleAt and openByHandleAt. We
 // originally tried to generate it via unix/linux/types.go with "type
