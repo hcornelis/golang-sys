@@ -51,6 +51,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+        gcc-powerpc-linux-gnu \
+	gccgo-go \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Let the scripts know they are in the docker environment
 ENV GOLANG_SYS_BUILD docker
 WORKDIR /build

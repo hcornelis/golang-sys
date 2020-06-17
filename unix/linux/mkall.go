@@ -56,91 +56,98 @@ type target struct {
 // and sparc64 are not fully supported, but there is enough support already to
 // generate Go type and error definitions.
 var targets = []target{
+	// {
+	// 	GoArch:    "386",
+	// 	LinuxArch: "x86",
+	// 	GNUArch:   "i686-linux-gnu", // Note "i686" not "i386"
+	// 	Bits:      32,
+	// },
+	// {
+	// 	GoArch:    "amd64",
+	// 	LinuxArch: "x86",
+	// 	GNUArch:   "x86_64-linux-gnu",
+	// 	Bits:      64,
+	// },
+	// {
+	// 	GoArch:     "arm64",
+	// 	LinuxArch:  "arm64",
+	// 	GNUArch:    "aarch64-linux-gnu",
+	// 	SignedChar: true,
+	// 	Bits:       64,
+	// },
+	// {
+	// 	GoArch:    "arm",
+	// 	LinuxArch: "arm",
+	// 	GNUArch:   "arm-linux-gnueabi",
+	// 	Bits:      32,
+	// },
+	// {
+	// 	GoArch:    "mips",
+	// 	LinuxArch: "mips",
+	// 	GNUArch:   "mips-linux-gnu",
+	// 	BigEndian: true,
+	// 	Bits:      32,
+	// },
+	// {
+	// 	GoArch:    "mipsle",
+	// 	LinuxArch: "mips",
+	// 	GNUArch:   "mipsel-linux-gnu",
+	// 	Bits:      32,
+	// },
+	// {
+	// 	GoArch:    "mips64",
+	// 	LinuxArch: "mips",
+	// 	GNUArch:   "mips64-linux-gnuabi64",
+	// 	BigEndian: true,
+	// 	Bits:      64,
+	// },
+	// {
+	// 	GoArch:    "mips64le",
+	// 	LinuxArch: "mips",
+	// 	GNUArch:   "mips64el-linux-gnuabi64",
+	// 	Bits:      64,
+	// },
 	{
-		GoArch:    "386",
-		LinuxArch: "x86",
-		GNUArch:   "i686-linux-gnu", // Note "i686" not "i386"
-		Bits:      32,
-	},
-	{
-		GoArch:    "amd64",
-		LinuxArch: "x86",
-		GNUArch:   "x86_64-linux-gnu",
-		Bits:      64,
-	},
-	{
-		GoArch:     "arm64",
-		LinuxArch:  "arm64",
-		GNUArch:    "aarch64-linux-gnu",
-		SignedChar: true,
-		Bits:       64,
-	},
-	{
-		GoArch:    "arm",
-		LinuxArch: "arm",
-		GNUArch:   "arm-linux-gnueabi",
-		Bits:      32,
-	},
-	{
-		GoArch:    "mips",
-		LinuxArch: "mips",
-		GNUArch:   "mips-linux-gnu",
-		BigEndian: true,
-		Bits:      32,
-	},
-	{
-		GoArch:    "mipsle",
-		LinuxArch: "mips",
-		GNUArch:   "mipsel-linux-gnu",
-		Bits:      32,
-	},
-	{
-		GoArch:    "mips64",
-		LinuxArch: "mips",
-		GNUArch:   "mips64-linux-gnuabi64",
-		BigEndian: true,
-		Bits:      64,
-	},
-	{
-		GoArch:    "mips64le",
-		LinuxArch: "mips",
-		GNUArch:   "mips64el-linux-gnuabi64",
-		Bits:      64,
-	},
-	{
-		GoArch:    "ppc64",
+		GoArch:    "ppc",
 		LinuxArch: "powerpc",
-		GNUArch:   "powerpc64-linux-gnu",
+		GNUArch:   "powerpc-linux-gnu",
 		BigEndian: true,
-		Bits:      64,
+		Bits:      32,
 	},
-	{
-		GoArch:    "ppc64le",
-		LinuxArch: "powerpc",
-		GNUArch:   "powerpc64le-linux-gnu",
-		Bits:      64,
-	},
-	{
-		GoArch:    "riscv64",
-		LinuxArch: "riscv",
-		GNUArch:   "riscv64-linux-gnu",
-		Bits:      64,
-	},
-	{
-		GoArch:     "s390x",
-		LinuxArch:  "s390",
-		GNUArch:    "s390x-linux-gnu",
-		BigEndian:  true,
-		SignedChar: true,
-		Bits:       64,
-	},
-	{
-		GoArch:    "sparc64",
-		LinuxArch: "sparc",
-		GNUArch:   "sparc64-linux-gnu",
-		BigEndian: true,
-		Bits:      64,
-	},
+	// {
+	// 	GoArch:    "ppc64",
+	// 	LinuxArch: "powerpc",
+	// 	GNUArch:   "powerpc64-linux-gnu",
+	// 	BigEndian: true,
+	// 	Bits:      64,
+	// },
+	// {
+	// 	GoArch:    "ppc64le",
+	// 	LinuxArch: "powerpc",
+	// 	GNUArch:   "powerpc64le-linux-gnu",
+	// 	Bits:      64,
+	// },
+	// {
+	// 	GoArch:    "riscv64",
+	// 	LinuxArch: "riscv",
+	// 	GNUArch:   "riscv64-linux-gnu",
+	// 	Bits:      64,
+	// },
+	// {
+	// 	GoArch:     "s390x",
+	// 	LinuxArch:  "s390",
+	// 	GNUArch:    "s390x-linux-gnu",
+	// 	BigEndian:  true,
+	// 	SignedChar: true,
+	// 	Bits:       64,
+	// },
+	// {
+	// 	GoArch:    "sparc64",
+	// 	LinuxArch: "sparc",
+	// 	GNUArch:   "sparc64-linux-gnu",
+	// 	BigEndian: true,
+	// 	Bits:      64,
+	// },
 }
 
 // ptracePairs is a list of pairs of targets that can, in some cases,
@@ -177,6 +184,22 @@ func main() {
 	}
 	LinuxDir = os.Args[1]
 	GlibcDir = os.Args[2]
+
+	fmt.Printf("____ PATH environment variable is: %s\n", os.Getenv("PATH"))
+
+	go_version, _ := exec.Command("go", "version").Output()
+
+	fmt.Printf("____ the default go-tool is: %s\n", go_version)
+
+	which_go, _ := exec.Command("which", "go").Output()
+
+	fmt.Printf("____ this is found as: %s\n", which_go)
+
+	gcc_go_version, _ := exec.Command("/usr/bin/go", "version").Output()
+
+	fmt.Printf("____ the /usr/bin/go is: %s\n", gcc_go_version)
+
+//	return
 
 	for _, t := range targets {
 		fmt.Printf("----- GENERATING: %s -----\n", t.GoArch)
@@ -237,17 +260,17 @@ func (t *target) commandFormatOutput(formatter string, outputFile string,
 	mainCmd := makeCommand(name, args...)
 	if name == "mksyscall" {
 		args = append([]string{"run", "mksyscall.go"}, args...)
-		mainCmd = makeCommand("go", args...)
+		mainCmd = makeCommand("/usr/bin/go", args...)
 		t.setTargetBuildArch(mainCmd)
 	} else if name == "mksysnum" {
 		args = append([]string{"run", "linux/mksysnum.go"}, args...)
-		mainCmd = makeCommand("go", args...)
+		mainCmd = makeCommand("/usr/bin/go", args...)
 		t.setTargetBuildArch(mainCmd)
 	}
 
 	fmtCmd := makeCommand(formatter)
 	if formatter == "mkpost" {
-		fmtCmd = makeCommand("go", "run", "mkpost.go")
+		fmtCmd = makeCommand("/usr/bin/go", "run", "mkpost.go")
 		t.setTargetBuildArch(fmtCmd)
 	}
 
@@ -330,6 +353,11 @@ func (t *target) generateFiles() error {
 
 	if err := t.makeZErrorsFile(); err != nil {
 		return fmt.Errorf("could not make zerrors file: %v", err)
+	}
+	fmt.Println("zerrors file generated")
+
+	if err := t.makeZSocketDefinitions(); err != nil {
+		return fmt.Errorf("could not make ZSocketDefinitions file: %v", err)
 	}
 	fmt.Println("zerrors file generated")
 
@@ -520,7 +548,18 @@ func (t *target) makeZTypesFile() error {
 	args := []string{"tool", "cgo", "-godefs", "--"}
 	args = append(args, t.cFlags()...)
 	args = append(args, "linux/types.go")
-	return t.commandFormatOutput("mkpost", ztypesFile, "go", args...)
+	return t.commandFormatOutput("mkpost", ztypesFile, "/usr/bin/go", args...)
+}
+
+// makes the ztypes_linux_$GOARCH.go file
+func (t *target) makeZSocketDefinitions() error {
+	ztypesFile := fmt.Sprintf("zsocket_definitions_linux_%s.go", t.GoArch)
+
+	args := []string{"tool", "cgo", "-godefs", "--"}
+	args = append(args, t.cFlags()...)
+	args = append(args, "linux/defs_linux.go")
+	args = append(args, "linux/defs1_linux.go")
+	return t.commandFormatOutput("mkpost", ztypesFile, "/usr/bin/go", args...)
 }
 
 // Flags that should be given to gcc and cgo for this target
