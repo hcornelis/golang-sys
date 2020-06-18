@@ -18,7 +18,7 @@ RUN git config --global advice.detachedHead false
 # Linux Kernel: Released 31 May 2020
 RUN git clone --branch v5.7 --depth 1 https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux
 # GNU C library: Released 01 Feb 2020 (we should try to get a secure way to clone this)
-RUN git clone --branch release/2.31/master --depth 1 git://sourceware.org/git/glibc.git
+RUN git clone --branch release/2.30/master --depth 1 git://sourceware.org/git/glibc.git
 
 # Get Go
 ENV GOLANG_VERSION 1.14.4
