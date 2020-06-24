@@ -30,7 +30,13 @@ RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
     && tar -C /usr/local -xzf golang.tar.gz \
     && rm golang.tar.gz
 
-ENV PATH /usr/local/go/bin:$PATH
+# ENV PATH /usr/local/go/bin:$PATH
+
+# # make the container available for an hour
+# ENTRYPOINT ["sleep", "3600"]
+
+# avoid user interaction -- it will hang docker
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Linux and Glibc build dependencies and emulator
 RUN apt-get update && apt-get install -y  --no-install-recommends \
@@ -57,7 +63,13 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install a few tools that help with problem inspection
+RUN apt-get update && apt-get install -y \
+        less apt-file findutils vim-tiny \
+    && rm -rf /var/lib/apt/lists/*
+
 # Let the scripts know they are in the docker environment
 ENV GOLANG_SYS_BUILD docker
 WORKDIR /build
 ENTRYPOINT ["go", "run", "linux/mkall.go", "/git/linux", "/git/glibc"]
+# ENTRYPOINT ["bash"]
