@@ -281,7 +281,6 @@ func (t *target) commandFormatOutput(formatter string, outputFile string,
 	if fmtCmd.Stdout, err = os.Create(outputFile); err != nil {
 		return
 	}
-
 	// Make sure the formatter eventually closes
 	if err = fmtCmd.Start(); err != nil {
 		return
@@ -292,7 +291,6 @@ func (t *target) commandFormatOutput(formatter string, outputFile string,
 			err = fmtErr
 		}
 	}()
-
 	return mainCmd.Run()
 }
 
@@ -356,10 +354,21 @@ func (t *target) generateFiles() error {
 	}
 	fmt.Println("zerrors file generated")
 
-	if err := t.makeZSocketDefinitions(); err != nil {
-		return fmt.Errorf("could not make ZSocketDefinitions file: %v", err)
+	if err := t.makeZSocketDefinitions1(); err != nil {
+ 		return fmt.Errorf("could not make ZSocketDefinitions1 file: %v", err)
 	}
-	fmt.Println("zerrors file generated")
+	fmt.Println("zerrors1 file generated")
+
+	if err := t.makeZSocketDefinitions2(); err != nil {
+ 		return fmt.Errorf("could not make ZSocketDefinitions2 file: %v", err)
+	}
+	fmt.Println("zerrors2 file generated")
+
+	// sleepcommand := makeCommand("sleep", "3600")
+	// sleepcommand.Dir = LinuxDir
+	// if err := sleepcommand.Run(); err != nil {
+	// 	return fmt.Errorf("sleep command failed: %v", err)
+	// }
 
 	return nil
 }
@@ -551,13 +560,28 @@ func (t *target) makeZTypesFile() error {
 	return t.commandFormatOutput("mkpost", ztypesFile, "/usr/bin/go", args...)
 }
 
-// makes the ztypes_linux_$GOARCH.go file
-func (t *target) makeZSocketDefinitions() error {
-	ztypesFile := fmt.Sprintf("zsocket_definitions_linux_%s.go", t.GoArch)
+// makes the ztypes_linux_$GOARCH.go file1
+func (t *target) makeZSocketDefinitions1() error {
+	ztypesFile := fmt.Sprintf("zsocket_definitions1_linux_%s.go", t.GoArch)
 
 	args := []string{"tool", "cgo", "-godefs", "--"}
+
+	// fmt.Printf("t.cFlags1: %s\n", t.cFlags())
+
 	args = append(args, t.cFlags()...)
 	args = append(args, "linux/defs_linux.go")
+	return t.commandFormatOutput("mkpost", ztypesFile, "/usr/bin/go", args...)
+}
+
+// makes the ztypes_linux_$GOARCH.go file2
+func (t *target) makeZSocketDefinitions2() error {
+	ztypesFile := fmt.Sprintf("zsocket_definitions2_linux_%s.go", t.GoArch)
+
+	args := []string{"tool", "cgo", "-godefs", "--"}
+
+	// fmt.Printf("t.cFlags2: %s\n", t.cFlags())
+
+	args = append(args, t.cFlags()...)
 	args = append(args, "linux/defs1_linux.go")
 	return t.commandFormatOutput("mkpost", ztypesFile, "/usr/bin/go", args...)
 }
