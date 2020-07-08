@@ -117,6 +117,31 @@ func main() {
 	renameStatTimeFieldsRegex := regexp.MustCompile(`([AMCB])(?:irth)?time?(?:spec)?\s+(Timespec|StTimespec)`)
 	b = renameStatTimeFieldsRegex.ReplaceAll(b, []byte("${1}tim ${2}"))
 
+	// Rename Stat_t time fields
+	if goos == "linux" && goarch == "ppc" {
+		// retype ppc Statfs_t fields
+		// renameStatFSPPCFieldsRegex := regexp.MustCompile(`(Type|Bsize|Namelen|Frsize|Flags)(\s+)int32`)
+		// b = renameStatFSPPCFieldsRegex.ReplaceAll(b, []byte("${1}${2}uint32"))
+
+		renameStatFSPPCFieldsRegex1 := regexp.MustCompile(`type Statfs_t struct {
+(\s+)Type(\s+)int32
+(\s+)Bsize(\s+)int32`)
+		b = renameStatFSPPCFieldsRegex1.ReplaceAll(b, []byte(`type Statfs_t struct {
+${1}Type${2}uint32
+${3}Bsize${4}uint32`))
+
+		renameStatFSPPCFieldsRegex2 := regexp.MustCompile(`(\s+)Namelen(\s+)int32
+(\s+)Frsize(\s+)int32
+(\s+)Flags(\s+)int32
+(\s+)Spare(\s+)\[4\]int32
+(\s+)_(\s+)\[4\]byte`)
+		b = renameStatFSPPCFieldsRegex2.ReplaceAll(b, []byte(`${1}Namelen${2}uint32
+${3}Frsize${4}uint32
+${5}Flags${6}uint32
+${7}Spare${8}[4]uint32
+${9}_${10}[4]byte`))
+	}
+
 	// gofmt
 	b, err = format.Source(b)
 	if err != nil {
