@@ -1450,18 +1450,18 @@ type HDDriveID struct {
 }
 
 type Statfs_t struct {
-	Type    int32
-	Bsize   int32
+	Type    uint32
+	Bsize   uint32
 	Blocks  uint64
 	Bfree   uint64
 	Bavail  uint64
 	Files   uint64
 	Ffree   uint64
 	Fsid    Fsid
-	Namelen int32
-	Frsize  int32
-	Flags   int32
-	Spare   [4]int32
+	Namelen uint32
+	Frsize  uint32
+	Flags   uint32
+	Spare   [4]uint32
 	_       [4]byte
 }
 
