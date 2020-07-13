@@ -818,7 +818,21 @@ type InotifyEvent struct {
 
 const SizeofInotifyEvent = 0x10
 
-type PtraceRegs struct{}
+type PtraceRegs struct {
+	Gpr       [32]uint32
+	Nip       uint32
+	Msr       uint32
+	Orig_gpr3 uint32
+	Ctr       uint32
+	Link      uint32
+	Xer       uint32
+	Ccr       uint32
+	Mq        uint32
+	Trap      uint32
+	Dar       uint32
+	Dsisr     uint32
+	Result    uint32
+}
 
 type FdSet struct {
 	Bits [32]int32
