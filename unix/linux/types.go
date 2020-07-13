@@ -276,7 +276,7 @@ struct sockaddr_iucv {
 typedef struct user_regs PtraceRegs;
 #elif defined(__aarch64__)
 typedef struct user_pt_regs PtraceRegs;
-#elif defined(__mips__) || defined(__powerpc64__)
+#elif defined(__mips__) || defined(__powerpc64__) || defined(__powerpc__)
 typedef struct pt_regs PtraceRegs;
 #elif defined(__s390x__)
 typedef struct _user_regs_struct PtraceRegs;
