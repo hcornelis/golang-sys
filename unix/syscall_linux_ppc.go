@@ -14,8 +14,9 @@ import (
 //sys	Dup2(oldfd int, newfd int) (err error)
 //sysnb	EpollCreate(size int) (fd int, err error)
 //sys	EpollWait(epfd int, events []EpollEvent, msec int) (n int, err error)
-//sys	Fadvise(fd int, offset int64, length int64, advice int) (err error) = SYS_FADVISE64
+//sys	Fadvise(fd int, offset int64, length int64, advice int) (err error) = SYS_FADVISE64_64
 //sys	Fchown(fd int, uid int, gid int) (err error)
+//sys   fcntl(fd int, cmd int, arg int) (val int, err error) = SYS_FCNTL64
 //sys	Fstat(fd int, stat *Stat_t) (err error) = SYS_FSTAT64
 //sys	Fstatat(dirfd int, path string, stat *Stat_t, flags int) (err error) = SYS_FSTATAT64
 //sys	Ftruncate(fd int, length int64) (err error) = SYS_FTRUNCATE64
@@ -102,10 +103,10 @@ func setTimeval(sec, usec int64) Timeval {
 }
 
 // TODO: what is the name of the instruction pointer register for ppc?
-// func (r *PtraceRegs) PC() uint64 { return r.Nip }
+func (r *PtraceRegs) PC() uint32 { return r.Nip }
 
 // TODO: what is the name of the instruction pointer register for ppc?
-// func (r *PtraceRegs) SetPC(pc uint64) { r.Nip = pc }
+func (r *PtraceRegs) SetPC(pc uint32) { r.Nip = pc }
 
 func (iov *Iovec) SetLen(length int) {
 	iov.Len = uint32(length)
