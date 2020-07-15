@@ -117,11 +117,9 @@ func main() {
 	renameStatTimeFieldsRegex := regexp.MustCompile(`([AMCB])(?:irth)?time?(?:spec)?\s+(Timespec|StTimespec)`)
 	b = renameStatTimeFieldsRegex.ReplaceAll(b, []byte("${1}tim ${2}"))
 
-	// Rename Stat_t time fields
+	// Retype the Statfs_t fields on ppc to uints
 	if goos == "linux" && goarch == "ppc" {
 		// retype ppc Statfs_t fields
-		// renameStatFSPPCFieldsRegex := regexp.MustCompile(`(Type|Bsize|Namelen|Frsize|Flags)(\s+)int32`)
-		// b = renameStatFSPPCFieldsRegex.ReplaceAll(b, []byte("${1}${2}uint32"))
 
 		renameStatFSPPCFieldsRegex1 := regexp.MustCompile(`type Statfs_t struct {
 (\s+)Type(\s+)int32
@@ -140,6 +138,20 @@ ${3}Frsize${4}uint32
 ${5}Flags${6}uint32
 ${7}Spare${8}[4]uint32
 ${9}_${10}[4]byte`))
+	}
+
+	// Correct 64 bit alignment of the EpollEvent struct on ppc
+	if goos == "linux" && goarch == "ppc" {
+		// retype ppc EpollEvent fields
+
+		renameStatFSPPCFieldsRegex1 := regexp.MustCompile(`type EpollEvent struct {
+(\s+)Events(\s+)uint32
+(\s+)Fd(\s+)int32`)
+		b = renameStatFSPPCFieldsRegex1.ReplaceAll(b, []byte(`type EpollEvent struct {
+${1}Events${2}uint32
+	_      uint32
+${3}Fd${4}int32`))
+
 	}
 
 	// gofmt
