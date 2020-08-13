@@ -9,6 +9,7 @@ package unix
 
 import (
 	"unsafe"
+	"syscall"
 )
 
 //sys	Dup2(oldfd int, newfd int) (err error)
@@ -35,7 +36,6 @@ import (
 //sys	Pread(fd int, p []byte, offset int64) (n int, err error) = SYS_PREAD64
 //sys	Pwrite(fd int, p []byte, offset int64) (n int, err error) = SYS_PWRITE64
 //sys	Renameat(olddirfd int, oldpath string, newdirfd int, newpath string) (err error)
-//sys	Seek(fd int, offset int64, whence int) (off int64, err error) = SYS_LSEEK
 //sys	Select(nfd int, r *FdSet, w *FdSet, e *FdSet, timeout *Timeval) (n int, err error) = SYS__NEWSELECT
 //sys	sendfile(outfd int, infd int, offset *int64, count int) (written int, err error) = SYS_SENDFILE64
 //sys	setfsgid(gid int) (prev int, err error)
@@ -73,6 +73,22 @@ import (
 //sysnb	Time(t *Time_t) (tt Time_t, err error)
 //sys	Utime(path string, buf *Utimbuf) (err error)
 //sys	utimes(path string, times *[2]Timeval) (err error)
+
+func seek(fd int, offset int64, whence int) (int64, syscall.Errno) {
+        var newoffset int64
+        offsetLow := uint32(offset & 0xffffffff)
+        offsetHigh := uint32((offset >> 32) & 0xffffffff)
+        _, _, err := Syscall6(SYS__LLSEEK, uintptr(fd), uintptr(offsetHigh), uintptr(offsetLow), uintptr(unsafe.Pointer(&newoffset)), uintptr(whence), 0)
+        return newoffset, err
+}
+
+func Seek(fd int, offset int64, whence int) (newoffset int64, err error) {
+	newoffset, errno := seek(fd, offset, whence)
+	if errno != 0 {
+		return 0, errno
+	}
+	return newoffset, nil
+}
 
 func Fstatfs(fd int, buf *Statfs_t) (err error) {
 	_, _, e := Syscall(SYS_FSTATFS64, uintptr(fd), unsafe.Sizeof(*buf), uintptr(unsafe.Pointer(buf)))
